@@ -1,0 +1,70 @@
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.local
+.env.*.local
+
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# ===========================
+# Vector Store
+# ===========================
+vectorstore/
+
+# ===========================
+# Data (raw downloads — user adds manually)
+# ===========================
+data/raw/
+data/processed/
+data/hashes.json
+
+# ===========================
+# Node.js / Next.js
+# ===========================
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/.vercel
+.turbo
+
+# ===========================
+# IDE
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================
+# Misc
+# ===========================
+*.log
+*.tmp
+.gemini/
+stitch_smartinvest_ai_assistant/

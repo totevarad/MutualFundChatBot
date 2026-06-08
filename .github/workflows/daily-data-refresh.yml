@@ -1,0 +1,49 @@
+# .github/workflows/daily-data-refresh.yml
+# Runs daily at 9:15 AM IST (3:45 AM UTC) to refresh mutual fund data
+
+name: Daily Data Refresh
+
+on:
+  schedule:
+    # 3:45 AM UTC = 9:15 AM IST
+    - cron: '45 3 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run data ingestion pipeline
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CHROMA_PERSIST_DIR: ./vectorstore
+          MEM0_API_KEY: ${{ secrets.MEM0_API_KEY }}
+        run: python -m src.ingestion.run_pipeline
+
+      - name: Validate ingestion
+        run: python -m src.ingestion.validate
+
+      - name: Upload vectorstore artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vectorstore-${{ github.run_number }}
+          path: ./vectorstore/
+          retention-days: 7
+
+      - name: Deploy updated vectorstore
+        run: python -m src.ingestion.deploy_vectorstore
+        env:
+          DEPLOY_TARGET: ${{ secrets.DEPLOY_TARGET }}

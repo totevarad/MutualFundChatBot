@@ -1,0 +1,194 @@
+[
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/factsheets",
+    "type": "factsheet",
+    "scheme": "HDFC Large Cap Fund",
+    "category": "large_cap",
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/factsheets",
+    "type": "factsheet",
+    "scheme": "HDFC Flexi Cap Fund",
+    "category": "flexi_cap",
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/factsheets",
+    "type": "factsheet",
+    "scheme": "HDFC ELSS Tax saver",
+    "category": "elss",
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/factsheets",
+    "type": "factsheet",
+    "scheme": "HDFC Hybrid Equity Fund",
+    "category": "hybrid",
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/factsheets",
+    "type": "factsheet",
+    "scheme": "HDFC Mid Cap Fund",
+    "category": "mid_cap",
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/fund-documents/kim",
+    "type": "kim",
+    "scheme": null,
+    "category": null,
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/fund-documents/sid",
+    "type": "sid",
+    "scheme": null,
+    "category": null,
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/fund-documents/sai",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "pdf",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/information/faq",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/services/account-statement",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/services/consolidated-account-statement",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/information/taxation",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/investor-desk/kyc",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/contact-us",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.amfiindia.com/investor-corner",
+    "type": "amfi_guidance",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.amfiindia.com/net-asset-value/nav-history",
+    "type": "amfi_guidance",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://investor.sebi.gov.in/mutual-funds.html",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://scores.gov.in/scores/Welcome.html",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://mfonline.hdfcfund.com/",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/statutory-disclosure/portfolio/monthly-portfolio",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/mutual-funds/performance",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/investor-desk/fatca-crs",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/investor-desk/knowledge-center",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  },
+  {
+    "url": "https://www.hdfcfund.com/information/investor-charter",
+    "type": "faq",
+    "scheme": null,
+    "category": null,
+    "format": "html",
+    "last_scraped": null
+  }
+]
