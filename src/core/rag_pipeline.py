@@ -17,6 +17,9 @@ from src.guardrails.pii_detector import detect_pii
 from src.core.query_classifier import classify_query
 from src.guardrails.output_validator import validate_output
 
+from src.memory.memory_manager import get_user_context, store_interaction
+from src.memory.memory_formatter import format_memories
+
 logger = get_logger(__name__)
 
 # Initialize ChromaDB client
@@ -179,8 +182,9 @@ def query_pipeline(query: str, user_id: str | None = None) -> dict:
     source_url = chunks[0].get("source_url", "Unknown")
     document_date = chunks[0].get("document_date", "Unknown")
     
-    # Mocking memory for now (Phase 5 integration)
-    user_memories = "No memory context available."
+    # Phase 5: Memory Integration
+    raw_memories = get_user_context(user_id, query) if user_id else []
+    user_memories = format_memories(raw_memories)
     
     prompt = QUERY_TEMPLATE.format(
         retrieved_chunks=context_text,
@@ -222,7 +226,13 @@ def query_pipeline(query: str, user_id: str | None = None) -> dict:
             answer=validation["corrected_answer"],
             source_url="https://www.amfiindia.com/investor-corner",
             is_refusal=True,
-            memory_used=[]
+            memory_used=raw_memories
         )
         
+    # Phase 5: Store successful interaction
+    if user_id:
+        store_interaction(user_id, query, raw_answer)
+        
+    # Attach memory context to response
+    formatted["memory_used"] = raw_memories
     return formatted
