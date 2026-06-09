@@ -5,6 +5,9 @@ Usage:
     uvicorn src.api.main:app --reload --port 8000
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 

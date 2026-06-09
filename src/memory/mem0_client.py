@@ -25,6 +25,18 @@ def get_memory_client() -> Memory | None:
                     "collection_name": "mem0_user_memory",
                     "path": "./vectorstore"
                 }
+            },
+            "llm": {
+                "provider": "groq",
+                "config": {
+                    "model": "llama-3.1-70b-versatile"
+                }
+            },
+            "embedder": {
+                "provider": "huggingface",
+                "config": {
+                    "model": "BAAI/bge-large-en"
+                }
             }
         }
         _memory_instance = Memory.from_config(config)

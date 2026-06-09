@@ -4,6 +4,8 @@ RAG Pipeline — End-to-end Retrieve → Re-Rank → Generate orchestration.
 
 import os
 import json
+from dotenv import load_dotenv
+load_dotenv()
 from openai import OpenAI
 import chromadb
 from sentence_transformers import SentenceTransformer, CrossEncoder
