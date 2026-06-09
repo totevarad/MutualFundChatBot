@@ -133,9 +133,12 @@ To ensure compliance and security, the system **must not** collect, store, or pr
 
 ## Technical Implementation Guide (RAG)
 
-### Recommended Stack
-- **Frontend**: Single-page application or minimal responsive layout.
-- **Backend/RAG**: Python (e.g., FastAPI, LangChain, or Llamaindex) or Node.js.
-- **Data Ingestion**: Parsers for PDFs/HTML pages (Factsheets, SID, KIM).
-- **Vector Store**: Lightweight vector database (e.g., ChromaDB, FAISS, or in-memory vector search) for storing semantic chunks of the official documents.
-- **LLM/API Integration**: A reliable model to process retrieved chunks and generate facts-only answers matching the 3-sentence constraint.
+### Final Implemented Stack
+- **Frontend**: Next.js 14+ with Tailwind CSS v4. Implemented the Nocturnal Growth design system (Dark Navy backgrounds with `#4edea3` Emerald Green accents).
+- **Backend/API**: FastAPI serving REST endpoints.
+- **RAG Orchestration**: Custom Python pipeline integrating multiple layers (Sanitization -> PII Check -> Classifier -> Retrieval -> Generation -> Validation).
+- **Data Ingestion**: `pdfplumber` and `BeautifulSoup` for HTML/PDF scraping. Automated via GitHub Actions daily CRON job (`45 3 * * *`).
+- **Vector Store**: ChromaDB (persistent local storage).
+- **Embeddings & Re-ranking**: `BAAI/bge-large-en` (Embeddings) and `cross-encoder/ms-marco-MiniLM-L-6-v2` (Re-ranker) via `sentence-transformers`.
+- **LLM Engine**: Groq API (`llama-3.1-70b-versatile` / `llama3-70b-8192`).
+- **Memory Layer**: `mem0` configured with Groq LLM and HuggingFace embeddings for conversational persistence.

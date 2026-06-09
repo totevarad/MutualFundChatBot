@@ -32,18 +32,19 @@ collection = chroma_client.get_or_create_collection(
     metadata={"hnsw:space": "cosine"}
 )
 
-# Initialize BGE model
-# Note: In production this should be loaded once globally
-bge_model = SentenceTransformer('BAAI/bge-large-en')
+from functools import lru_cache
 
-# Initialize Re-ranker lazily
-_cross_encoder = None
+# Initialize BGE model lazily and cache it
+@lru_cache(maxsize=1)
+def get_bge_model():
+    logger.info("Loading BGE embedding model...")
+    return SentenceTransformer('BAAI/bge-large-en')
+
+# Initialize Re-ranker lazily and cache it
+@lru_cache(maxsize=1)
 def get_reranker():
-    global _cross_encoder
-    if _cross_encoder is None:
-        logger.info("Loading cross-encoder model...")
-        _cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2', max_length=512)
-    return _cross_encoder
+    logger.info("Loading cross-encoder model...")
+    return CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2', max_length=512)
 
 # Initialize OpenAI Client (Groq)
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "dummy-key-for-tests")
@@ -88,7 +89,7 @@ def retrieve_chunks(query: str, top_k: int = 5) -> list[dict]:
     """
     # Embed query with BGE specific instruction
     query_prefix = "Represent this sentence for searching relevant passages: "
-    query_vector = bge_model.encode(query_prefix + query, normalize_embeddings=True).tolist()
+    query_vector = get_bge_model().encode(query_prefix + query, normalize_embeddings=True).tolist()
     
     results = collection.query(
         query_embeddings=[query_vector],
