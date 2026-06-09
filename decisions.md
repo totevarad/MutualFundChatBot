@@ -24,6 +24,7 @@ This document catalogs key design decisions, architectural optimizations, and th
 *   **Unique Cache Key Hashing**: Designed diff-detection keys combining `{url}_{scheme}_{type}` in `data/hashes.json` to prevent collisions when different documents share the same URL, enabling incremental ingestion updates.
 *   **Batched Progress Logging**: Added batched embedding generation (batch size = 100) in the indexer to monitor CPU generation progress (average 24-25s per batch for 1,820 chunks).
 *   **Unit Test Optimizations**: Added `max_pages=2` parameter in `pdf_parser.py` and mocked offline sources in `test_ingestion.py` to reduce test runtimes from minutes to **7.57 seconds**.
+*   **Avoiding LangChain Document Loaders for Ingestion**: Decided not to use generic `PyPDFLoader` or `WebBaseLoader`. Built custom extractions with `pdfplumber` and `trafilatura` for granular table precision and layout control (see ADR 1).
 
 ---
 
@@ -52,3 +53,28 @@ This document catalogs key design decisions, architectural optimizations, and th
        `"I don't have this information in my current sources. You may find more details at: <URL>"`
     3. If no match is found, it falls back to the standard AMFI guidance portal:
        `"I don't have this information in my current sources. Please visit the official AMC website or AMFI portal for the latest details."`
+
+---
+
+## 🏗️ Architectural Decisions Record (ADR)
+
+### ADR 1: Avoiding LangChain Document Loaders for Ingestion
+**Status:** Accepted
+**Date:** 2026-06-09
+
+#### Context
+In Phase 2 (Data Ingestion Pipeline), we need to extract and index text from complex mutual fund PDFs (Factsheets, Scheme Information Documents) and HTML pages (AMC/AMFI guidelines). LangChain offers built-in Document Loaders (e.g., `PyPDFLoader`, `WebBaseLoader`, `Unstructured`), but we must decide whether to use them or rely on specialized, native Python libraries.
+
+#### Decision
+We will **not** use LangChain's built-in Document Loaders for the initial data extraction and parsing phase. Instead, we will use specialized libraries like `pdfplumber` for PDFs and `BeautifulSoup` / `trafilatura` for HTML web scraping.
+
+#### Rationale
+1. **Granular Control Over Complex Layouts:** Mutual fund documents (like Factsheets) have dense tabular data, multi-column layouts, watermarks, and repeating headers/footers. LangChain's generic PDF loaders often extract text as a flat string, scrambling multi-column layouts and ruining table integrity. `pdfplumber` gives us the exact coordinate-based control needed to extract tables accurately and ignore recurring noise (like headers and watermarks).
+2. **Clean Web Extraction:** LangChain's web loaders typically fetch the entire page, including navigation menus, ads, and footers. By using `trafilatura` and `BeautifulSoup`, we can precisely target the main article content and strip out boilerplate "noise," which reduces token waste and significantly lowers the risk of hallucinations.
+3. **Avoiding the "Black Box":** LangChain is excellent for Retrieve-and-Generate orchestration (which we leverage later), but its ingestion modules can be rigid. Writing custom extraction pipelines allows us to cleanly integrate our hash-based diff-detection (Phase 2.5) and tightly control the metadata schema on every chunk before inserting it into the vector store.
+
+#### Consequences
+- **Positive:** Higher quality, cleaner context provided to the LLM. Less noise and better tabular data understanding.
+- **Negative:** Increased initial development time, as we must manually write and maintain parsing scripts rather than using one-line LangChain loaders.
+
+*(Note: LangChain components like `RecursiveCharacterTextSplitter` are still used for text chunking, and we may leverage LangChain/LlamaIndex for the runtime RAG orchestration in Phase 3. This decision strictly applies to the initial document parsing and loading).*

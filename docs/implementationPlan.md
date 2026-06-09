@@ -180,38 +180,38 @@ Build the core Retrieve → Re-Rank → Generate pipeline that answers factual q
 ### Tasks
 
 #### 3.1 Query Embedding
-- [ ] Reuse `BAAI/bge-large-en` model from ingestion phase
-- [ ] Implement query → embedding conversion function
-- [ ] Add `Represent this sentence for searching relevant passages:` prefix (BGE-specific instruction)
+- [x] Reuse `BAAI/bge-large-en` model from ingestion phase
+- [x] Implement query → embedding conversion function
+- [x] Add `Represent this sentence for searching relevant passages:` prefix (BGE-specific instruction)
 
 #### 3.2 Retriever (`src/core/rag_pipeline.py`)
-- [ ] Implement ChromaDB semantic search with cosine similarity
-- [ ] Retrieve Top-K = 5 chunks per query
-- [ ] Filter by metadata if applicable (e.g., specific scheme)
-- [ ] Return chunks with full metadata (source_url, document_date, etc.)
+- [x] Implement ChromaDB semantic search with cosine similarity
+- [x] Retrieve Top-K = 5 chunks per query
+- [x] Filter by metadata if applicable (e.g., specific scheme)
+- [x] Return chunks with full metadata (source_url, document_date, etc.)
 
 #### 3.3 Re-Ranker (optional)
-- [ ] Integrate `cross-encoder/ms-marco-MiniLM-L-6-v2` for re-ranking
-- [ ] Re-rank Top-5 → Top-3 chunks
-- [ ] Make re-ranker configurable (can be toggled off)
+- [x] Integrate `cross-encoder/ms-marco-MiniLM-L-6-v2` for re-ranking
+- [x] Re-rank Top-5 → Top-3 chunks
+- [x] Make re-ranker configurable (can be toggled off)
 
 #### 3.4 LLM Generator
-- [ ] Integrate OpenAI `gpt-4o-mini` or Google `gemini-1.5-flash`
-- [ ] Configure: temperature=0.0, max_tokens=200, top_p=0.9
-- [ ] Pass system prompt + retrieved context + query to LLM
-- [ ] Implement fallback: if no relevant chunks found, perform keyword matching against the HDFC scheme names and resource note categories in `data/sources.json` to retrieve the most relevant official URL, and return: "I don't have this information in my current sources. You may find more details at: <URL>"
+- [x] Integrate OpenAI `gpt-4o-mini` or Google `gemini-1.5-flash`
+- [x] Configure: temperature=0.0, max_tokens=200, top_p=0.9
+- [x] Pass system prompt + retrieved context + query to LLM
+- [x] Implement fallback: if no relevant chunks found, perform keyword matching against the HDFC scheme names and resource note categories in `data/sources.json` to retrieve the most relevant official URL, and return: "I don't have this information in my current sources. You may find more details at: <URL>"
 
 #### 3.5 Prompt Templates (`src/core/prompt_templates.py`)
-- [ ] Implement system prompt (facts-only, 3-sentence limit, no advice)
-- [ ] Implement query template with context, source_url, document_date slots
-- [ ] Implement refusal prompt for advisory queries
-- [ ] Templates should accept memory context slot (used in Phase 5)
+- [x] Implement system prompt (facts-only, 3-sentence limit, no advice)
+- [x] Implement query template with context, source_url, document_date slots
+- [x] Implement refusal prompt for advisory queries
+- [x] Templates should accept memory context slot (used in Phase 5)
 
 #### 3.6 Response Formatter (`src/core/response_formatter.py`)
-- [ ] Enforce ≤ 3 sentence limit
-- [ ] Attach exactly one citation link from metadata
-- [ ] Append `"Last updated from sources: <date>"` footer
-- [ ] Validate output format before returning
+- [x] Enforce ≤ 3 sentence limit
+- [x] Attach exactly one citation link from metadata
+- [x] Append `"Last updated from sources: <date>"` footer
+- [x] Validate output format before returning
 
 ### Deliverables
 - Working RAG pipeline: query → embedding → retrieval → generation → formatted response

@@ -14,8 +14,39 @@ def classify_query(query: str) -> dict:
         query: The user's input query.
 
     Returns:
-        Dict with 'category' (factual|advisory|performance_comparison|pii|out_of_scope)
+        Dict with 'category' (factual|advisory|performance_comparison|out_of_scope)
         and 'confidence' (float 0-1).
     """
-    # TODO: Implement in Phase 4
-    raise NotImplementedError("Query classification will be implemented in Phase 4")
+    import re
+    query_lower = query.lower()
+    
+    # Define keywords for categories
+    advisory_keywords = [
+        "should i", "which is better", "recommend", "invest in", "good fund",
+        "where to invest", "best fund", "top fund"
+    ]
+    
+    performance_keywords = [
+        "compare returns", "better performance", "will give", "returns",
+        "how much profit", "past performance"
+    ]
+    
+    factual_keywords = [
+        "expense ratio", "exit load", "sip", "nav", "benchmark", "lock-in", 
+        "riskometer", "tax", "aum", "fund manager"
+    ]
+    
+    # Check advisory first (highest priority for guardrails)
+    if any(kw in query_lower for kw in advisory_keywords):
+        return {"category": "advisory", "confidence": 0.9}
+        
+    # Check performance comparison next
+    if any(kw in query_lower for kw in performance_keywords):
+        return {"category": "performance_comparison", "confidence": 0.8}
+        
+    # Check factual
+    if any(kw in query_lower for kw in factual_keywords):
+        return {"category": "factual", "confidence": 0.8}
+        
+    # Default fallback
+    return {"category": "out_of_scope", "confidence": 0.5}
