@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-background: #101415;
+  --color-surface: #101415;
+  --color-primary: #4edea3;
+  --color-secondary: #bec6e0;
+  --color-tertiary: #b9c7e0;
+  --color-surface-container-low: #191c1e;
+  --color-surface-container-high: #272a2c;
+  --color-surface-container-highest: #323537;
+  --color-outline: #86948a;
+  --color-outline-variant: #3c4a42;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --animate-typing-dot: typing-dot 1s infinite ease-in-out;
+  --animate-marquee: marquee 20s linear infinite;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes typing-dot {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-secondary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .animated-mesh-bg {
+    background: radial-gradient(circle at top right, #191c1e 0%, transparent 60%),
+                radial-gradient(circle at bottom left, #0b0f10 0%, transparent 60%);
+    background-color: #101415;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-surface-container-highest);
+    border-radius: 9999px;
+  }
 }
